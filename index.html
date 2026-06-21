@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>HP Converter v4.9</title>
+<title>HP Converter v4.10</title>
 <link rel="manifest" href="./manifest.json">
 <style>
 :root{
@@ -48,7 +48,7 @@ input{width:100%;height:27px;border:0;background:transparent;outline:none;text-a
 @media (min-width:680px){body{padding-left:14px;padding-right:14px}.app{padding-top:0}.header{margin-left:-14px;margin-right:-14px;padding:9px 14px 6px}.header h1{font-size:20px}.tabs{top:52px}.tab{height:32px;font-size:12.5px}.panel-card{padding:8px}.rows,.unitcol{gap:7px}.urow{grid-template-columns:94px minmax(0,1fr) 30px;min-height:36px}.urow.two{grid-template-columns:94px minmax(0,1fr) minmax(0,1fr) 30px}.urow.three{grid-template-columns:94px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 30px}.memo-list{min-height:58vh}}
 @media (max-width:370px){body{padding-left:5px;padding-right:5px}.header{margin-left:-5px;margin-right:-5px;padding:8px 8px 5px}.header h1{font-size:16px;letter-spacing:.055em}.tabs{top:45px;gap:3px;padding:4px;border-radius:14px}.tab,.tab-clear{height:28px;font-size:10.2px;border-radius:10px}.panel{margin-top:5px}.panel-card{padding:6px;border-radius:15px}.memo{border-radius:15px}.rows,.unitcol{gap:5px}.colhead,.frac-title{font-size:11.5px}.urow{grid-template-columns:43px minmax(0,1fr) 23px;min-height:31px;border-radius:10px;padding:3px 6px;gap:4px}.urow.two{grid-template-columns:58px minmax(0,1fr) minmax(0,1fr) 23px}.urow.three{grid-template-columns:56px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 23px}.label{font-size:13.1px}input{height:23px;font-size:15px}.sbtn{width:22px;height:22px;font-size:14px}.memo-title{font-size:14px}.memo-list{min-height:55vh}.memo-item{font-size:15.2px}}
 
-/* v4.8 compact input rows + larger saved area */
+/* v4.10 compact input rows + selected-value saved behavior */
 .panel-card{position:relative;padding:6px}
 .input-clear{display:none}
 .input-clear:active{transform:scale(.96)}
@@ -64,7 +64,7 @@ input::placeholder{color:transparent}
 .memo{margin-top:5px}
 .memo-head{padding:6px 10px}
 .memo-list{min-height:68vh}
-.memo-item{font-size:14.2px;padding:6px 9px;font-weight:520;line-height:1.22}
+.memo-item{font-size:13.2px;padding:4px 8px;font-weight:430;line-height:1.18}
 .clear{padding:4px 9px;font-size:12px}
 @media (min-width:680px){.urow{grid-template-columns:86px minmax(0,1fr) 26px;min-height:27px}.urow.two{grid-template-columns:86px minmax(0,1fr) minmax(0,1fr) 26px}.urow.three{grid-template-columns:86px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 26px}.memo-list{min-height:69vh}}
 @media (max-width:370px){.panel-card{padding:5px}.rows,.unitcol{gap:4px}.urow{grid-template-columns:42px minmax(0,1fr) 21px;min-height:24px;padding:2px 5px}.urow.two{grid-template-columns:55px minmax(0,1fr) minmax(0,1fr) 21px}.urow.three{grid-template-columns:55px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 21px}.label{font-size:13px}input{height:18px;font-size:14.7px}.sbtn{width:20px;height:20px;font-size:13px}.memo-list{min-height:66vh}.input-clear{width:24px;height:22px;right:6px;top:4px}}
@@ -72,7 +72,7 @@ input::placeholder{color:transparent}
 </head>
 <body>
 <main class="app">
-  <header class="header"><div></div><h1><span>HP</span> Converter</h1><div class="ver">v4.9</div></header>
+  <header class="header"><div></div><h1><span>HP</span> Converter</h1><div class="ver">v4.10</div></header>
 
   <nav class="tabs">
     <button class="tab active" data-tab="length">Length</button>
@@ -183,6 +183,7 @@ const $ = id => document.getElementById(id);
 const cats = ["length","area","volume","temp","weight","speed"];
 let updating = false;
 let saveDraft = {length:[], area:[], volume:[], temp:[], weight:[], speed:[]};
+let draftMemoIndex = {length:null, area:null, volume:null, temp:null, weight:null, speed:null};
 let lastInput = {length:null, area:null, volume:null, temp:null, weight:null, speed:null};
 
 const label = {mm:"mm",cm:"cm",m:"m",km:"km",inch:"inch",fraction:"in frac",ft:"ft",yd:"yd",mile:"mile",ftfrac:"ft in",sqft:"sq ft",sqm:"sq m",sqyd:"sq yd",acre:"acre",pyeong:"평",cuft:"cu ft",cuin:"cu in",qt:"qt",pint:"pint",cup:"cup",gal:"gal",l:"L",ml:"mL",floz:"fl oz",f:"°F",c:"°C",lb:"lb",oz:"oz",kg:"kg",g:"g",mph:"mph",kmh:"km/h",knot:"knot"};
@@ -198,7 +199,7 @@ function ftOnlyFracParts(totalFeet){if(!Number.isFinite(totalFeet))return{ft:"",
 function setVal(id,v,d=3){const el=$(id);if(el && document.activeElement!==el)el.value=Number.isFinite(v)?fmt(v,d):""}
 function setText(id,v){const el=$(id);if(el && document.activeElement!==el)el.value=v||""}
 function clearCat(cat){document.querySelectorAll(`input[data-cat="${cat}"]`).forEach(i=>{if(document.activeElement!==i)i.value=""})}
-function clearInputs(cat){document.querySelectorAll(`input[data-cat="${cat}"]`).forEach(i=>i.value=""); saveDraft[cat]=[]}
+function clearInputs(cat){document.querySelectorAll(`input[data-cat="${cat}"]`).forEach(i=>i.value=""); saveDraft[cat]=[]; draftMemoIndex[cat]=null}
 
 function saveDisplay(cat,unit){
   if(cat==="length"){
@@ -223,6 +224,32 @@ function conversionSummary(cat){
   if(cat==="weight") return [src, val("weight","lb")+" lb", val("weight","kg")+" kg", val("weight","oz")+" oz"].filter(x=>x && !x.startsWith(" ")).join(" = ");
   if(cat==="speed") return [src, val("speed","mph")+" mph", val("speed","kmh")+" km/h", val("speed","knot")+" knot"].filter(x=>x && !x.startsWith(" ")).join(" = ");
   return src;
+}
+
+function selectedSaveItem(cat, unit){
+  const item = saveDisplay(cat, unit).trim();
+  return item;
+}
+function saveSelected(cat, unit){
+  const item = selectedSaveItem(cat, unit);
+  if(!item) return;
+  const arr = getMemos(cat);
+  let draft = saveDraft[cat] || [];
+  if(!draft.length || draftMemoIndex[cat] === null){
+    draft = [item];
+    saveDraft[cat] = draft;
+    arr.unshift(draft.join(' = '));
+    draftMemoIndex[cat] = 0;
+  }else{
+    const existsAt = draft.findIndex(x => x.replace(/\s+/g,' ') === item.replace(/\s+/g,' '));
+    if(existsAt >= 0){
+      draft[existsAt] = item;
+    }else{
+      draft.push(item);
+    }
+    arr[draftMemoIndex[cat]] = draft.join(' = ');
+  }
+  setMemos(cat, arr);
 }
 
 function updateLength(unit){
@@ -257,13 +284,9 @@ function setMemos(cat,a){localStorage.setItem(key(cat),JSON.stringify(a.slice(0,
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
 function renderMemo(cat){const box=$("memo_"+cat),arr=getMemos(cat);if(!arr.length){box.innerHTML='<div class="empty">No saved values.</div>';return}box.innerHTML=arr.map((x,i)=>{return `<div class="memo-item"><div>${esc(x)}</div><button class="xbtn" data-cat="${cat}" data-i="${i}">×</button></div>`}).join("");box.querySelectorAll(".xbtn").forEach(b=>b.onclick=()=>{const a=getMemos(b.dataset.cat);a.splice(Number(b.dataset.i),1);setMemos(b.dataset.cat,a)})}
 
-document.querySelectorAll("input[data-cat]").forEach(el=>{el.addEventListener("focus",()=>el.select());el.addEventListener("input",()=>{const cat=el.dataset.cat,unit=el.dataset.unit;saveDraft[cat]=[];lastInput[cat]={unit};if(cat==="length")updateLength(unit);if(cat==="area")updateArea(unit);if(cat==="volume")updateVolume(unit);if(cat==="temp")updateTemp(unit);if(cat==="weight")updateWeight(unit);if(cat==="speed")updateSpeed(unit)})});
+document.querySelectorAll("input[data-cat]").forEach(el=>{el.addEventListener("focus",()=>el.select());el.addEventListener("input",()=>{const cat=el.dataset.cat,unit=el.dataset.unit;saveDraft[cat]=[];draftMemoIndex[cat]=null;lastInput[cat]={unit};if(cat==="length")updateLength(unit);if(cat==="area")updateArea(unit);if(cat==="volume")updateVolume(unit);if(cat==="temp")updateTemp(unit);if(cat==="weight")updateWeight(unit);if(cat==="speed")updateSpeed(unit)})});
 document.querySelectorAll(".sbtn").forEach(btn=>btn.onclick=()=>{
-  const cat=btn.dataset.cat, item=conversionSummary(cat);
-  if(!item.trim())return;
-  const a=getMemos(cat);
-  a.unshift(item);
-  setMemos(cat,a);
+  saveSelected(btn.dataset.cat, btn.dataset.unit);
 });
 document.querySelectorAll(".clear").forEach(btn=>btn.onclick=()=>{localStorage.removeItem(key(btn.dataset.cat));renderMemo(btn.dataset.cat)});
 $("clearCurrent").onclick=()=>{const active=document.querySelector(".tab.active"); if(active) clearInputs(active.dataset.tab)};
