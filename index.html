@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>HP Converter v4.7</title>
+<title>HP Converter v4.8</title>
 <link rel="manifest" href="./manifest.json">
 <style>
 :root{
@@ -44,11 +44,32 @@ input{width:100%;height:27px;border:0;background:transparent;outline:none;text-a
 .memo{margin-top:6px;flex:1;min-height:0;display:flex;flex-direction:column}.memo-head{display:flex;align-items:center;justify-content:space-between;background:rgba(22,55,70,.95);border-bottom:1px solid var(--line);padding:7px 11px}.memo-title{font-size:15px;font-weight:900;letter-spacing:-.02em;color:#f8fafc}.clear{border:1px solid rgba(255,139,139,.45);background:rgba(255,255,255,.06);color:#ffb4b4;border-radius:999px;padding:5px 10px;font-size:12.5px;font-weight:850;cursor:pointer}.memo-list{flex:1;min-height:56vh;max-height:none;overflow:auto;background:rgba(15,38,50,.7)}.empty{padding:13px;color:var(--dim);font-size:14.5px}.memo-item{display:grid;grid-template-columns:1fr 28px;gap:6px;align-items:center;border-top:1px solid color-mix(in srgb,var(--line) 70%,transparent);padding:10px 11px;font-size:16.5px;font-weight:780;line-height:1.28;color:#f7fbff}.memo-item:first-child{border-top:0}.xbtn{width:26px;height:26px;border:1px solid rgba(255,139,139,.45);background:rgba(255,255,255,.06);color:#ffb4b4;font-weight:900;border-radius:999px;cursor:pointer}.note{display:none}
 @media (min-width:680px){body{padding-left:14px;padding-right:14px}.app{padding-top:0}.header{margin-left:-14px;margin-right:-14px;padding:9px 14px 6px}.header h1{font-size:20px}.tabs{top:52px}.tab{height:32px;font-size:12.5px}.panel-card{padding:8px}.rows,.unitcol{gap:7px}.urow{grid-template-columns:94px minmax(0,1fr) 30px;min-height:36px}.urow.two{grid-template-columns:94px minmax(0,1fr) minmax(0,1fr) 30px}.urow.three{grid-template-columns:94px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 30px}.memo-list{min-height:58vh}}
 @media (max-width:370px){body{padding-left:5px;padding-right:5px}.header{margin-left:-5px;margin-right:-5px;padding:8px 8px 5px}.header h1{font-size:16px;letter-spacing:.055em}.tabs{top:45px;gap:3px;padding:4px;border-radius:14px}.tab{height:28px;font-size:10.8px;border-radius:10px}.panel{margin-top:5px}.panel-card{padding:6px;border-radius:15px}.memo{border-radius:15px}.rows,.unitcol{gap:5px}.colhead,.frac-title{font-size:11.5px}.urow{grid-template-columns:43px minmax(0,1fr) 23px;min-height:31px;border-radius:10px;padding:3px 6px;gap:4px}.urow.two{grid-template-columns:58px minmax(0,1fr) minmax(0,1fr) 23px}.urow.three{grid-template-columns:56px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 23px}.label{font-size:13.1px}input{height:23px;font-size:15px}.sbtn{width:22px;height:22px;font-size:14px}.memo-title{font-size:14px}.memo-list{min-height:55vh}.memo-item{font-size:15.2px}}
+
+/* v4.8 compact input rows + larger saved area */
+.panel-card{position:relative;padding:6px}
+.input-clear{position:absolute;right:7px;top:5px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#dbeafe;border-radius:999px;width:26px;height:24px;font-size:15px;font-weight:900;line-height:1;cursor:pointer;z-index:2}
+.input-clear:active{transform:scale(.96)}
+.rows{gap:5px}.unitcol{gap:4px}.colhead,.frac-title{font-size:12px;padding:0 2px}
+.frac-block{gap:4px;padding-top:4px}
+.urow{min-height:28px;border-radius:10px;padding:2px 6px;gap:4px;grid-template-columns:62px minmax(0,1fr) 24px}
+.urow.two{grid-template-columns:70px minmax(0,1fr) minmax(0,1fr) 24px}
+.urow.three{grid-template-columns:70px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 24px}
+.label{font-size:15px}
+input{height:22px;font-size:17px}
+input::placeholder{color:transparent}
+.sbtn{width:22px;height:22px;font-size:14px}
+.memo{margin-top:5px}
+.memo-head{padding:6px 10px}
+.memo-list{min-height:64vh}
+.memo-item{font-size:16.5px;padding:9px 10px}
+.clear{padding:4px 9px;font-size:12px}
+@media (min-width:680px){.urow{grid-template-columns:86px minmax(0,1fr) 26px;min-height:30px}.urow.two{grid-template-columns:86px minmax(0,1fr) minmax(0,1fr) 26px}.urow.three{grid-template-columns:86px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 26px}.memo-list{min-height:66vh}}
+@media (max-width:370px){.panel-card{padding:5px}.rows,.unitcol{gap:4px}.urow{grid-template-columns:42px minmax(0,1fr) 21px;min-height:27px;padding:2px 5px}.urow.two{grid-template-columns:55px minmax(0,1fr) minmax(0,1fr) 21px}.urow.three{grid-template-columns:55px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 21px}.label{font-size:13px}input{height:20px;font-size:15px}.sbtn{width:20px;height:20px;font-size:13px}.memo-list{min-height:62vh}.input-clear{width:24px;height:22px;right:6px;top:4px}}
 </style>
 </head>
 <body>
 <main class="app">
-  <header class="header"><div></div><h1><span>HP</span> Converter</h1><div class="ver">v4.7</div></header>
+  <header class="header"><div></div><h1><span>HP</span> Converter</h1><div class="ver">v4.8</div></header>
 
   <nav class="tabs">
     <button class="tab active" data-tab="length">Length</button>
@@ -61,26 +82,27 @@ input{width:100%;height:27px;border:0;background:transparent;outline:none;text-a
 
   <section id="length" class="panel active" data-cat="length">
     <div class="panel-card">
+      <button class="input-clear" data-clear-input="length" title="Clear inputs">×</button>
       <div class="panel-title"><h2>Length</h2><div class="tip"></div></div>
       <div class="rows length-layout">
         <div class="unitcol metric-col">
           <div class="colhead">METRIC</div>
-          <div class="urow"><span class="label">mm</span><input enterkeyhint="done" id="length_mm" data-cat="length" data-unit="mm" inputmode="decimal" placeholder="mm"><button class="sbtn" data-cat="length" data-unit="mm">＋</button></div>
-          <div class="urow"><span class="label">cm</span><input enterkeyhint="done" id="length_cm" data-cat="length" data-unit="cm" inputmode="decimal" placeholder="cm"><button class="sbtn" data-cat="length" data-unit="cm">＋</button></div>
-          <div class="urow"><span class="label">m</span><input enterkeyhint="done" id="length_m" data-cat="length" data-unit="m" inputmode="decimal" placeholder="m"><button class="sbtn" data-cat="length" data-unit="m">＋</button></div>
-          <div class="urow"><span class="label">km</span><input enterkeyhint="done" id="length_km" data-cat="length" data-unit="km" inputmode="decimal" placeholder="km"><button class="sbtn" data-cat="length" data-unit="km">＋</button></div>
+          <div class="urow"><span class="label">mm</span><input enterkeyhint="done" id="length_mm" data-cat="length" data-unit="mm" inputmode="decimal"><button class="sbtn" data-cat="length" data-unit="mm">＋</button></div>
+          <div class="urow"><span class="label">cm</span><input enterkeyhint="done" id="length_cm" data-cat="length" data-unit="cm" inputmode="decimal"><button class="sbtn" data-cat="length" data-unit="cm">＋</button></div>
+          <div class="urow"><span class="label">m</span><input enterkeyhint="done" id="length_m" data-cat="length" data-unit="m" inputmode="decimal"><button class="sbtn" data-cat="length" data-unit="m">＋</button></div>
+          <div class="urow"><span class="label">km</span><input enterkeyhint="done" id="length_km" data-cat="length" data-unit="km" inputmode="decimal"><button class="sbtn" data-cat="length" data-unit="km">＋</button></div>
         </div>
         <div class="unitcol us-col">
           <div class="colhead">U.S.</div>
-          <div class="urow"><span class="label">inch</span><input enterkeyhint="done" id="length_inch" data-cat="length" data-unit="inch" inputmode="decimal" placeholder="inch"><button class="sbtn" data-cat="length" data-unit="inch">＋</button></div>
-          <div class="urow"><span class="label">ft</span><input enterkeyhint="done" id="length_ft" data-cat="length" data-unit="ft" inputmode="decimal" placeholder="ft"><button class="sbtn" data-cat="length" data-unit="ft">＋</button></div>
-          <div class="urow"><span class="label">yd</span><input enterkeyhint="done" id="length_yd" data-cat="length" data-unit="yd" inputmode="decimal" placeholder="yd"><button class="sbtn" data-cat="length" data-unit="yd">＋</button></div>
-          <div class="urow"><span class="label">mile</span><input enterkeyhint="done" id="length_mile" data-cat="length" data-unit="mile" inputmode="decimal" placeholder="mile"><button class="sbtn" data-cat="length" data-unit="mile">＋</button></div>
+          <div class="urow"><span class="label">inch</span><input enterkeyhint="done" id="length_inch" data-cat="length" data-unit="inch" inputmode="decimal"><button class="sbtn" data-cat="length" data-unit="inch">＋</button></div>
+          <div class="urow"><span class="label">ft</span><input enterkeyhint="done" id="length_ft" data-cat="length" data-unit="ft" inputmode="decimal"><button class="sbtn" data-cat="length" data-unit="ft">＋</button></div>
+          <div class="urow"><span class="label">yd</span><input enterkeyhint="done" id="length_yd" data-cat="length" data-unit="yd" inputmode="decimal"><button class="sbtn" data-cat="length" data-unit="yd">＋</button></div>
+          <div class="urow"><span class="label">mile</span><input enterkeyhint="done" id="length_mile" data-cat="length" data-unit="mile" inputmode="decimal"><button class="sbtn" data-cat="length" data-unit="mile">＋</button></div>
         </div>
         <div class="frac-block">
           <div class="frac-title">FRACTION</div>
-          <div class="urow two"><span class="label">in frac</span><input enterkeyhint="done" id="length_fraction_whole" data-cat="length" data-unit="fraction" inputmode="decimal" placeholder="inch"><input enterkeyhint="done" id="length_fraction_part" data-cat="length" data-unit="fraction" placeholder="1/2"><button class="sbtn" data-cat="length" data-unit="fraction">＋</button></div>
-          <div class="urow three"><span class="label">ft in</span><input enterkeyhint="done" id="length_ftfrac_ft" data-cat="length" data-unit="ftfrac" inputmode="decimal" placeholder="ft"><input enterkeyhint="done" id="length_ftfrac_in" data-cat="length" data-unit="ftfrac" inputmode="decimal" placeholder="in"><input enterkeyhint="done" id="length_ftfrac_frac" data-cat="length" data-unit="ftfrac" placeholder="1/2"><button class="sbtn" data-cat="length" data-unit="ftfrac">＋</button></div>
+          <div class="urow two"><span class="label">in frac</span><input enterkeyhint="done" id="length_fraction_whole" data-cat="length" data-unit="fraction" inputmode="decimal"><input enterkeyhint="done" id="length_fraction_part" data-cat="length" data-unit="fraction"><button class="sbtn" data-cat="length" data-unit="fraction">＋</button></div>
+          <div class="urow three"><span class="label">ft in</span><input enterkeyhint="done" id="length_ftfrac_ft" data-cat="length" data-unit="ftfrac" inputmode="decimal"><input enterkeyhint="done" id="length_ftfrac_in" data-cat="length" data-unit="ftfrac" inputmode="decimal"><input enterkeyhint="done" id="length_ftfrac_frac" data-cat="length" data-unit="ftfrac"><button class="sbtn" data-cat="length" data-unit="ftfrac">＋</button></div>
         </div>
       </div>
     </div>
@@ -90,11 +112,11 @@ input{width:100%;height:27px;border:0;background:transparent;outline:none;text-a
   <section id="area" class="panel" data-cat="area">
     <div class="panel-card"><div class="panel-title"><h2>Area</h2><div class="tip"></div></div>
       <div class="rows">
-        <div class="urow"><span class="label">sq ft</span><input enterkeyhint="done" id="area_sqft" data-cat="area" data-unit="sqft" inputmode="decimal" placeholder="sq ft"><button class="sbtn" data-cat="area" data-unit="sqft">＋</button></div>
-        <div class="urow"><span class="label">sq m</span><input enterkeyhint="done" id="area_sqm" data-cat="area" data-unit="sqm" inputmode="decimal" placeholder="sq m"><button class="sbtn" data-cat="area" data-unit="sqm">＋</button></div>
-        <div class="urow"><span class="label">sq yd</span><input enterkeyhint="done" id="area_sqyd" data-cat="area" data-unit="sqyd" inputmode="decimal" placeholder="sq yd"><button class="sbtn" data-cat="area" data-unit="sqyd">＋</button></div>
-        <div class="urow"><span class="label">acre</span><input enterkeyhint="done" id="area_acre" data-cat="area" data-unit="acre" inputmode="decimal" placeholder="acre"><button class="sbtn" data-cat="area" data-unit="acre">＋</button></div>
-        <div class="urow"><span class="label">평</span><input enterkeyhint="done" id="area_pyeong" data-cat="area" data-unit="pyeong" inputmode="decimal" placeholder="평"><button class="sbtn" data-cat="area" data-unit="pyeong">＋</button></div>
+        <div class="urow"><span class="label">sq ft</span><input enterkeyhint="done" id="area_sqft" data-cat="area" data-unit="sqft" inputmode="decimal"><button class="sbtn" data-cat="area" data-unit="sqft">＋</button></div>
+        <div class="urow"><span class="label">sq m</span><input enterkeyhint="done" id="area_sqm" data-cat="area" data-unit="sqm" inputmode="decimal"><button class="sbtn" data-cat="area" data-unit="sqm">＋</button></div>
+        <div class="urow"><span class="label">sq yd</span><input enterkeyhint="done" id="area_sqyd" data-cat="area" data-unit="sqyd" inputmode="decimal"><button class="sbtn" data-cat="area" data-unit="sqyd">＋</button></div>
+        <div class="urow"><span class="label">acre</span><input enterkeyhint="done" id="area_acre" data-cat="area" data-unit="acre" inputmode="decimal"><button class="sbtn" data-cat="area" data-unit="acre">＋</button></div>
+        <div class="urow"><span class="label">평</span><input enterkeyhint="done" id="area_pyeong" data-cat="area" data-unit="pyeong" inputmode="decimal"><button class="sbtn" data-cat="area" data-unit="pyeong">＋</button></div>
       </div>
     </div>
     <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="area">Clear All</button></div><div id="memo_area" class="memo-list"></div></div>
@@ -103,15 +125,15 @@ input{width:100%;height:27px;border:0;background:transparent;outline:none;text-a
   <section id="volume" class="panel" data-cat="volume">
     <div class="panel-card"><div class="panel-title"><h2>Volume / Liquid</h2><div class="tip"></div></div>
       <div class="rows">
-        <div class="urow"><span class="label">mL</span><input enterkeyhint="done" id="volume_ml" data-cat="volume" data-unit="ml" inputmode="decimal" placeholder="mL"><button class="sbtn" data-cat="volume" data-unit="ml">＋</button></div>
-        <div class="urow"><span class="label">fl oz</span><input enterkeyhint="done" id="volume_floz" data-cat="volume" data-unit="floz" inputmode="decimal" placeholder="fl oz"><button class="sbtn" data-cat="volume" data-unit="floz">＋</button></div>
-        <div class="urow"><span class="label">L</span><input enterkeyhint="done" id="volume_l" data-cat="volume" data-unit="l" inputmode="decimal" placeholder="L"><button class="sbtn" data-cat="volume" data-unit="l">＋</button></div>
-        <div class="urow"><span class="label">cup</span><input enterkeyhint="done" id="volume_cup" data-cat="volume" data-unit="cup" inputmode="decimal" placeholder="cup"><button class="sbtn" data-cat="volume" data-unit="cup">＋</button></div>
-        <div class="urow"><span class="label">pint</span><input enterkeyhint="done" id="volume_pint" data-cat="volume" data-unit="pint" inputmode="decimal" placeholder="pint"><button class="sbtn" data-cat="volume" data-unit="pint">＋</button></div>
-        <div class="urow"><span class="label">qt</span><input enterkeyhint="done" id="volume_qt" data-cat="volume" data-unit="qt" inputmode="decimal" placeholder="qt"><button class="sbtn" data-cat="volume" data-unit="qt">＋</button></div>
-        <div class="urow"><span class="label">gal</span><input enterkeyhint="done" id="volume_gal" data-cat="volume" data-unit="gal" inputmode="decimal" placeholder="gal"><button class="sbtn" data-cat="volume" data-unit="gal">＋</button></div>
-        <div class="urow"><span class="label">cu in</span><input enterkeyhint="done" id="volume_cuin" data-cat="volume" data-unit="cuin" inputmode="decimal" placeholder="cu in"><button class="sbtn" data-cat="volume" data-unit="cuin">＋</button></div>
-        <div class="urow"><span class="label">cu ft</span><input enterkeyhint="done" id="volume_cuft" data-cat="volume" data-unit="cuft" inputmode="decimal" placeholder="cu ft"><button class="sbtn" data-cat="volume" data-unit="cuft">＋</button></div>
+        <div class="urow"><span class="label">mL</span><input enterkeyhint="done" id="volume_ml" data-cat="volume" data-unit="ml" inputmode="decimal"><button class="sbtn" data-cat="volume" data-unit="ml">＋</button></div>
+        <div class="urow"><span class="label">fl oz</span><input enterkeyhint="done" id="volume_floz" data-cat="volume" data-unit="floz" inputmode="decimal"><button class="sbtn" data-cat="volume" data-unit="floz">＋</button></div>
+        <div class="urow"><span class="label">L</span><input enterkeyhint="done" id="volume_l" data-cat="volume" data-unit="l" inputmode="decimal"><button class="sbtn" data-cat="volume" data-unit="l">＋</button></div>
+        <div class="urow"><span class="label">cup</span><input enterkeyhint="done" id="volume_cup" data-cat="volume" data-unit="cup" inputmode="decimal"><button class="sbtn" data-cat="volume" data-unit="cup">＋</button></div>
+        <div class="urow"><span class="label">pint</span><input enterkeyhint="done" id="volume_pint" data-cat="volume" data-unit="pint" inputmode="decimal"><button class="sbtn" data-cat="volume" data-unit="pint">＋</button></div>
+        <div class="urow"><span class="label">qt</span><input enterkeyhint="done" id="volume_qt" data-cat="volume" data-unit="qt" inputmode="decimal"><button class="sbtn" data-cat="volume" data-unit="qt">＋</button></div>
+        <div class="urow"><span class="label">gal</span><input enterkeyhint="done" id="volume_gal" data-cat="volume" data-unit="gal" inputmode="decimal"><button class="sbtn" data-cat="volume" data-unit="gal">＋</button></div>
+        <div class="urow"><span class="label">cu in</span><input enterkeyhint="done" id="volume_cuin" data-cat="volume" data-unit="cuin" inputmode="decimal"><button class="sbtn" data-cat="volume" data-unit="cuin">＋</button></div>
+        <div class="urow"><span class="label">cu ft</span><input enterkeyhint="done" id="volume_cuft" data-cat="volume" data-unit="cuft" inputmode="decimal"><button class="sbtn" data-cat="volume" data-unit="cuft">＋</button></div>
       </div>
     </div>
     <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="volume">Clear All</button></div><div id="memo_volume" class="memo-list"></div></div>
@@ -120,8 +142,8 @@ input{width:100%;height:27px;border:0;background:transparent;outline:none;text-a
   <section id="temp" class="panel" data-cat="temp">
     <div class="panel-card"><div class="panel-title"><h2>Temp</h2><div class="tip"></div></div>
       <div class="rows">
-        <div class="urow"><span class="label">°F</span><input enterkeyhint="done" id="temp_f" data-cat="temp" data-unit="f" inputmode="decimal" placeholder="°F"><button class="sbtn" data-cat="temp" data-unit="f">＋</button></div>
-        <div class="urow"><span class="label">°C</span><input enterkeyhint="done" id="temp_c" data-cat="temp" data-unit="c" inputmode="decimal" placeholder="°C"><button class="sbtn" data-cat="temp" data-unit="c">＋</button></div>
+        <div class="urow"><span class="label">°F</span><input enterkeyhint="done" id="temp_f" data-cat="temp" data-unit="f" inputmode="decimal"><button class="sbtn" data-cat="temp" data-unit="f">＋</button></div>
+        <div class="urow"><span class="label">°C</span><input enterkeyhint="done" id="temp_c" data-cat="temp" data-unit="c" inputmode="decimal"><button class="sbtn" data-cat="temp" data-unit="c">＋</button></div>
       </div>
     </div>
     <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="temp">Clear All</button></div><div id="memo_temp" class="memo-list"></div></div>
@@ -130,10 +152,10 @@ input{width:100%;height:27px;border:0;background:transparent;outline:none;text-a
   <section id="weight" class="panel" data-cat="weight">
     <div class="panel-card"><div class="panel-title"><h2>Weight</h2><div class="tip"></div></div>
       <div class="rows">
-        <div class="urow"><span class="label">kg</span><input enterkeyhint="done" id="weight_kg" data-cat="weight" data-unit="kg" inputmode="decimal" placeholder="kg"><button class="sbtn" data-cat="weight" data-unit="kg">＋</button></div>
-        <div class="urow"><span class="label">lb</span><input enterkeyhint="done" id="weight_lb" data-cat="weight" data-unit="lb" inputmode="decimal" placeholder="lb"><button class="sbtn" data-cat="weight" data-unit="lb">＋</button></div>
-        <div class="urow"><span class="label">g</span><input enterkeyhint="done" id="weight_g" data-cat="weight" data-unit="g" inputmode="decimal" placeholder="g"><button class="sbtn" data-cat="weight" data-unit="g">＋</button></div>
-        <div class="urow"><span class="label">oz</span><input enterkeyhint="done" id="weight_oz" data-cat="weight" data-unit="oz" inputmode="decimal" placeholder="oz"><button class="sbtn" data-cat="weight" data-unit="oz">＋</button></div>
+        <div class="urow"><span class="label">kg</span><input enterkeyhint="done" id="weight_kg" data-cat="weight" data-unit="kg" inputmode="decimal"><button class="sbtn" data-cat="weight" data-unit="kg">＋</button></div>
+        <div class="urow"><span class="label">lb</span><input enterkeyhint="done" id="weight_lb" data-cat="weight" data-unit="lb" inputmode="decimal"><button class="sbtn" data-cat="weight" data-unit="lb">＋</button></div>
+        <div class="urow"><span class="label">g</span><input enterkeyhint="done" id="weight_g" data-cat="weight" data-unit="g" inputmode="decimal"><button class="sbtn" data-cat="weight" data-unit="g">＋</button></div>
+        <div class="urow"><span class="label">oz</span><input enterkeyhint="done" id="weight_oz" data-cat="weight" data-unit="oz" inputmode="decimal"><button class="sbtn" data-cat="weight" data-unit="oz">＋</button></div>
       </div>
     </div>
     <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="weight">Clear All</button></div><div id="memo_weight" class="memo-list"></div></div>
@@ -143,9 +165,9 @@ input{width:100%;height:27px;border:0;background:transparent;outline:none;text-a
   <section id="speed" class="panel" data-cat="speed">
     <div class="panel-card"><div class="panel-title"><h2>Speed</h2><div class="tip"></div></div>
       <div class="rows">
-        <div class="urow"><span class="label">mph</span><input enterkeyhint="done" id="speed_mph" data-cat="speed" data-unit="mph" inputmode="decimal" placeholder="mph"><button class="sbtn" data-cat="speed" data-unit="mph">＋</button></div>
-        <div class="urow"><span class="label">km/h</span><input enterkeyhint="done" id="speed_kmh" data-cat="speed" data-unit="kmh" inputmode="decimal" placeholder="km/h"><button class="sbtn" data-cat="speed" data-unit="kmh">＋</button></div>
-        <div class="urow"><span class="label">knot</span><input enterkeyhint="done" id="speed_knot" data-cat="speed" data-unit="knot" inputmode="decimal" placeholder="knot"><button class="sbtn" data-cat="speed" data-unit="knot">＋</button></div>
+        <div class="urow"><span class="label">mph</span><input enterkeyhint="done" id="speed_mph" data-cat="speed" data-unit="mph" inputmode="decimal"><button class="sbtn" data-cat="speed" data-unit="mph">＋</button></div>
+        <div class="urow"><span class="label">km/h</span><input enterkeyhint="done" id="speed_kmh" data-cat="speed" data-unit="kmh" inputmode="decimal"><button class="sbtn" data-cat="speed" data-unit="kmh">＋</button></div>
+        <div class="urow"><span class="label">knot</span><input enterkeyhint="done" id="speed_knot" data-cat="speed" data-unit="knot" inputmode="decimal"><button class="sbtn" data-cat="speed" data-unit="knot">＋</button></div>
       </div>
     </div>
     <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="speed">Clear All</button></div><div id="memo_speed" class="memo-list"></div></div>
@@ -171,6 +193,7 @@ function ftOnlyFracParts(totalFeet){if(!Number.isFinite(totalFeet))return{ft:"",
 function setVal(id,v,d=3){const el=$(id);if(el && document.activeElement!==el)el.value=Number.isFinite(v)?fmt(v,d):""}
 function setText(id,v){const el=$(id);if(el && document.activeElement!==el)el.value=v||""}
 function clearCat(cat){document.querySelectorAll(`input[data-cat="${cat}"]`).forEach(i=>{if(document.activeElement!==i)i.value=""})}
+function clearInputs(cat){document.querySelectorAll(`input[data-cat="${cat}"]`).forEach(i=>i.value=""); saveDraft[cat]=[]}
 
 function saveDisplay(cat,unit){
   if(cat==="length"){
@@ -206,25 +229,22 @@ function updateTemp(unit){if(updating)return;updating=true;const v=num($("temp_"
 function updateWeight(unit){if(updating)return;updating=true;let g=NaN;const v=num($("weight_"+unit).value);if(unit==="lb")g=v*453.59237;if(unit==="oz")g=v*28.349523125;if(unit==="kg")g=v*1000;if(unit==="g")g=v;if(!Number.isFinite(g)){clearCat("weight");updating=false;return}setVal("weight_lb",g/453.59237,4);setVal("weight_oz",g/28.349523125,3);setVal("weight_kg",g/1000,4);setVal("weight_g",g,2);updating=false}
 function updateSpeed(unit){if(updating)return;updating=true;let kmh=NaN;const v=num($("speed_"+unit).value);if(unit==="mph")kmh=v*1.609344;if(unit==="kmh")kmh=v;if(unit==="knot")kmh=v*1.852;if(!Number.isFinite(kmh)){clearCat("speed");updating=false;return}setVal("speed_mph",kmh/1.609344,3);setVal("speed_kmh",kmh,3);setVal("speed_knot",kmh/1.852,3);updating=false}
 
-function key(cat){return"hoppy_unit_converter_v46_memo_"+cat}
+function key(cat){return"hoppy_unit_converter_v48_memo_"+cat}
 function getMemos(cat){try{return JSON.parse(localStorage.getItem(key(cat))||"[]")}catch(e){return[]}}
 function setMemos(cat,a){localStorage.setItem(key(cat),JSON.stringify(a.slice(0,100)));renderMemo(cat)}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
-function renderMemo(cat){const box=$("memo_"+cat),arr=getMemos(cat);if(!arr.length){box.innerHTML='<div class="empty">No saved values.</div>';return}box.innerHTML=arr.map((x,i)=>{const shown=String(x).replace("__draft__","");return `<div class="memo-item"><div>${esc(shown)}</div><button class="xbtn" data-cat="${cat}" data-i="${i}">×</button></div>`}).join("");box.querySelectorAll(".xbtn").forEach(b=>b.onclick=()=>{const a=getMemos(b.dataset.cat);a.splice(Number(b.dataset.i),1);setMemos(b.dataset.cat,a)})}
+function renderMemo(cat){const box=$("memo_"+cat),arr=getMemos(cat);if(!arr.length){box.innerHTML='<div class="empty">No saved values.</div>';return}box.innerHTML=arr.map((x,i)=>{return `<div class="memo-item"><div>${esc(x)}</div><button class="xbtn" data-cat="${cat}" data-i="${i}">×</button></div>`}).join("");box.querySelectorAll(".xbtn").forEach(b=>b.onclick=()=>{const a=getMemos(b.dataset.cat);a.splice(Number(b.dataset.i),1);setMemos(b.dataset.cat,a)})}
 
 document.querySelectorAll("input[data-cat]").forEach(el=>{el.addEventListener("focus",()=>el.select());el.addEventListener("input",()=>{const cat=el.dataset.cat,unit=el.dataset.unit;saveDraft[cat]=[];if(cat==="length")updateLength(unit);if(cat==="area")updateArea(unit);if(cat==="volume")updateVolume(unit);if(cat==="temp")updateTemp(unit);if(cat==="weight")updateWeight(unit);if(cat==="speed")updateSpeed(unit)})});
 document.querySelectorAll(".sbtn").forEach(btn=>btn.onclick=()=>{
   const cat=btn.dataset.cat, unit=btn.dataset.unit, item=saveDisplay(cat,unit);
   if(!item.trim())return;
-  if(!saveDraft[cat]) saveDraft[cat]=[];
-  if(!saveDraft[cat].includes(item)) saveDraft[cat].push(item);
-  const line=saveDraft[cat].join(" = ");
   const a=getMemos(cat);
-  if(a.length && a[0].startsWith("__draft__")) a[0]="__draft__"+line;
-  else a.unshift("__draft__"+line);
+  a.unshift(item);
   setMemos(cat,a);
 });
 document.querySelectorAll(".clear").forEach(btn=>btn.onclick=()=>{localStorage.removeItem(key(btn.dataset.cat));renderMemo(btn.dataset.cat)});
+document.querySelectorAll(".input-clear").forEach(btn=>btn.onclick=()=>{clearInputs(btn.dataset.clearInput)});
 function switchTab(tab){
   const btn = typeof tab === "number" ? document.querySelectorAll(".tab")[tab] : document.querySelector(`.tab[data-tab="${tab}"]`);
   if(!btn) return;
