@@ -1,1 +1,1 @@
-Upload all files to GitHub Pages repository root.
+HP Converter v4.7 GitHub Pages ready

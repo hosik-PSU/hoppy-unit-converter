@@ -1,4 +1,4 @@
-const CACHE_NAME = "hoppy-unit-converter-v4-6";
+const CACHE_NAME = "hoppy-unit-converter-v4-7";
 const APP_SHELL = [
   "./",
   "./index.html",
