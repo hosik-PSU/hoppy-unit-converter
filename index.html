@@ -4,46 +4,46 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>HOPPY Unit Converter v4.0</title>
+<title>HOPPY Unit Converter v4.1</title>
 <link rel="manifest" href="./manifest.json">
 <style>
 :root{
-  --bg:#eef2f7;
+  --bg:#f4f6f8;
   --card:#ffffff;
-  --card2:#f8fafc;
-  --text:#0f172a;
-  --muted:#64748b;
-  --line:#d9e1ec;
-  --shadow:0 10px 28px rgba(15,23,42,.10);
+  --text:#111827;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --soft:#f8fafc;
+  --shadow:0 8px 24px rgba(15,23,42,.08);
+  --ink:#0f172a;
   --blue:#2563eb;
-  --green:#16a34a;
+  --green:#059669;
   --cyan:#0891b2;
-  --orange:#f97316;
+  --orange:#ea580c;
   --purple:#7c3aed;
   --red:#dc2626;
-  --dark:#111827;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0;background:linear-gradient(180deg,#eaf1fb 0%,#f6f8fb 46%,#eef2f7 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",Arial,sans-serif}
-body{padding:env(safe-area-inset-top) 8px env(safe-area-inset-bottom)}
-.app{max-width:860px;margin:0 auto;padding:8px 0 14px}
-.header{display:flex;justify-content:space-between;align-items:center;margin:0 0 8px;padding:12px 14px;border:1px solid rgba(217,225,236,.9);border-radius:20px;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);box-shadow:var(--shadow)}
-h1{font-size:20px;line-height:1.05;margin:0;letter-spacing:-.045em;font-weight:950}.header h1 span{color:var(--blue)}.ver{font-size:11px;color:#fff;background:var(--dark);font-weight:900;border-radius:999px;padding:5px 8px;letter-spacing:.02em}
-.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:17px;padding:5px;box-shadow:var(--shadow);position:sticky;top:4px;z-index:30;backdrop-filter:blur(10px)}
-.tab{height:36px;border:0;border-radius:12px;background:transparent;color:var(--muted);font-size:12.5px;font-weight:950;cursor:pointer;letter-spacing:-.02em}.tab.active{color:#fff;box-shadow:0 6px 16px rgba(15,23,42,.16)}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",Arial,sans-serif}
+body{padding:env(safe-area-inset-top) 8px env(safe-area-inset-bottom);min-height:100dvh}
+.app{max-width:820px;margin:0 auto;padding:8px 0 10px;min-height:100dvh;display:flex;flex-direction:column}
+.header{display:flex;justify-content:space-between;align-items:center;margin:0 0 7px;padding:10px 12px;border-radius:18px;background:linear-gradient(135deg,#0f172a,#1f2937);box-shadow:0 10px 26px rgba(15,23,42,.16)}
+h1{font-size:18px;line-height:1;margin:0;letter-spacing:-.035em;font-weight:900;color:#fff}.header h1 span{color:#93c5fd}.ver{font-size:10.5px;color:#d1d5db;background:rgba(255,255,255,.12);font-weight:800;border-radius:999px;padding:5px 8px;border:1px solid rgba(255,255,255,.14)}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:4px;box-shadow:var(--shadow);position:sticky;top:4px;z-index:30}
+.tab{height:29px;border:0;border-radius:11px;background:transparent;color:var(--muted);font-size:12px;font-weight:850;cursor:pointer;letter-spacing:-.02em}.tab.active{color:#fff;box-shadow:0 5px 14px rgba(15,23,42,.14)}
 .tab[data-tab="length"].active{background:var(--blue)}.tab[data-tab="area"].active{background:var(--green)}.tab[data-tab="volume"].active{background:var(--cyan)}.tab[data-tab="temp"].active{background:var(--orange)}.tab[data-tab="weight"].active{background:var(--purple)}
-.panel{display:none;margin-top:8px}.panel.active{display:block}.panel-card,.memo{background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}.panel-card{padding:8px}.panel-title{display:flex;align-items:center;justify-content:space-between;margin:0 2px 8px}h2{font-size:16px;margin:0;font-weight:950;letter-spacing:-.03em}.tip{font-size:10px;color:var(--muted)}
-#length .panel-card,#length .memo{border-top:5px solid var(--blue)}#area .panel-card,#area .memo{border-top:5px solid var(--green)}#volume .panel-card,#volume .memo{border-top:5px solid var(--cyan)}#temp .panel-card,#temp .memo{border-top:5px solid var(--orange)}#weight .panel-card,#weight .memo{border-top:5px solid var(--purple)}
-.rows{display:grid;gap:6px}.urow{display:grid;grid-template-columns:84px minmax(0,1fr) 30px;gap:6px;align-items:center;min-height:38px;border:1px solid #e3e9f2;background:linear-gradient(180deg,#fff,#fbfdff);border-radius:14px;padding:5px 7px}.urow.two{grid-template-columns:84px minmax(0,1fr) minmax(0,1fr) 30px}.urow.three{grid-template-columns:84px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 30px}.label{font-size:12px;color:var(--muted);font-weight:950;white-space:nowrap;letter-spacing:-.02em}
-input{width:100%;height:26px;border:0;background:transparent;outline:none;text-align:right;font-size:16px;font-weight:850;color:var(--text);padding:0 1px}input::placeholder{color:#b2bdca;font-weight:700}.sbtn{border:0;background:#eef4ff;color:var(--blue);border-radius:999px;width:28px;height:27px;font-size:16px;line-height:1;font-weight:950;cursor:pointer;padding:0}.sbtn:active,.clear:active,.xbtn:active{transform:scale(.96)}
-.memo{margin-top:8px}.memo-head{display:flex;align-items:center;justify-content:space-between;background:#f4f7fb;border-bottom:1px solid var(--line);padding:8px 10px}.memo-title{font-size:13px;font-weight:950;letter-spacing:-.02em}.clear{border:1px solid #fecaca;background:#fff;color:var(--red);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:900;cursor:pointer}.memo-list{min-height:210px;max-height:46vh;overflow:auto;background:#fff}.empty{padding:12px;color:var(--muted);font-size:12.5px}.memo-item{display:grid;grid-template-columns:1fr 28px;gap:6px;align-items:center;border-top:1px solid #edf1f6;padding:8px 9px;font-size:14px;line-height:1.23}.memo-item:first-child{border-top:0}.xbtn{width:26px;height:26px;border:1px solid #fecaca;background:#fff;color:var(--red);font-weight:950;border-radius:999px;cursor:pointer}.note{display:none}
-@media (min-width:680px){body{padding-left:14px;padding-right:14px}.app{padding-top:14px}.header{padding:14px 16px}h1{font-size:24px}.tab{height:40px;font-size:13.5px}.panel-card{padding:10px}.rows{grid-template-columns:1fr 1fr;gap:8px}.urow{grid-template-columns:98px minmax(0,1fr) 32px;min-height:42px}.urow.two{grid-template-columns:98px minmax(0,1fr) minmax(0,1fr) 32px}.urow.three{grid-template-columns:98px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 32px}.memo-list{min-height:260px;max-height:50vh}}
-@media (max-width:370px){body{padding-left:5px;padding-right:5px}.header{padding:10px 11px;border-radius:17px}h1{font-size:18px}.ver{font-size:10px;padding:4px 7px}.tabs{gap:3px;padding:4px;border-radius:15px}.tab{height:33px;font-size:11.5px;border-radius:10px}.panel{margin-top:6px}.panel-card{padding:6px;border-radius:17px}.memo{border-radius:17px}.urow{grid-template-columns:76px minmax(0,1fr) 27px;min-height:34px;border-radius:12px;padding:4px 6px;gap:4px}.urow.two{grid-template-columns:76px minmax(0,1fr) minmax(0,1fr) 27px}.urow.three{grid-template-columns:76px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 27px}.label{font-size:11px}input{height:24px;font-size:14px}.sbtn{width:26px;height:25px;font-size:15px}.memo-list{min-height:190px;max-height:42vh}}
+.panel{display:none;margin-top:7px;min-height:0;flex:1}.panel.active{display:flex;flex-direction:column}.panel-card,.memo{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.panel-card{padding:8px}.panel-title{display:none}h2{font-size:15px;margin:0;font-weight:900}.tip{font-size:10px;color:var(--muted)}
+#length .panel-card,#length .memo{border-top:3px solid var(--blue)}#area .panel-card,#area .memo{border-top:3px solid var(--green)}#volume .panel-card,#volume .memo{border-top:3px solid var(--cyan)}#temp .panel-card,#temp .memo{border-top:3px solid var(--orange)}#weight .panel-card,#weight .memo{border-top:3px solid var(--purple)}
+.rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.urow{display:grid;grid-template-columns:48px minmax(0,1fr) 26px;gap:4px;align-items:center;min-height:31px;border:1px solid #e7edf5;background:#fbfdff;border-radius:13px;padding:4px 6px}.urow.two{grid-template-columns:58px minmax(0,1fr) minmax(0,1fr) 26px;grid-column:1/-1}.urow.three{grid-template-columns:58px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 26px;grid-column:1/-1}.label{font-size:10.8px;color:#64748b;font-weight:850;white-space:nowrap;letter-spacing:-.02em}
+input{width:100%;height:23px;border:0;background:transparent;outline:none;text-align:right;font-size:14px;font-weight:800;color:var(--text);padding:0 1px}input::placeholder{color:#b8c1cc;font-weight:650}.sbtn{border:0;background:#eef4ff;color:#1d4ed8;border-radius:999px;width:24px;height:23px;font-size:15px;line-height:1;font-weight:900;cursor:pointer;padding:0}.sbtn:active,.clear:active,.xbtn:active{transform:scale(.96)}
+.memo{margin-top:7px;flex:1;min-height:0;display:flex;flex-direction:column}.memo-head{display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border-bottom:1px solid var(--line);padding:7px 10px}.memo-title{font-size:13px;font-weight:900;letter-spacing:-.02em}.clear{border:1px solid #fecaca;background:#fff;color:var(--red);border-radius:999px;padding:5px 10px;font-size:11.5px;font-weight:850;cursor:pointer}.memo-list{flex:1;min-height:48vh;max-height:none;overflow:auto;background:#fff}.empty{padding:12px;color:var(--muted);font-size:12.5px}.memo-item{display:grid;grid-template-columns:1fr 27px;gap:6px;align-items:center;border-top:1px solid #eef2f7;padding:8px 9px;font-size:14px;line-height:1.22}.memo-item:first-child{border-top:0}.xbtn{width:25px;height:25px;border:1px solid #fecaca;background:#fff;color:var(--red);font-weight:900;border-radius:999px;cursor:pointer}.note{display:none}
+@media (min-width:680px){body{padding-left:14px;padding-right:14px}.app{padding-top:10px}.header{padding:12px 15px}h1{font-size:20px}.tab{height:33px;font-size:13px}.panel-card{padding:10px}.rows{gap:8px}.urow{grid-template-columns:78px minmax(0,1fr) 30px;min-height:36px}.urow.two{grid-template-columns:86px minmax(0,1fr) minmax(0,1fr) 30px}.urow.three{grid-template-columns:86px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 30px}.memo-list{min-height:52vh}}
+@media (max-width:370px){body{padding-left:5px;padding-right:5px}.app{padding-top:6px}.header{padding:9px 10px;border-radius:15px}h1{font-size:16px}.ver{font-size:10px;padding:4px 7px}.tabs{gap:3px;padding:4px;border-radius:14px}.tab{height:28px;font-size:10.5px;border-radius:10px}.panel{margin-top:5px}.panel-card{padding:6px;border-radius:15px}.memo{border-radius:15px}.urow{grid-template-columns:43px minmax(0,1fr) 23px;min-height:29px;border-radius:11px;padding:3px 5px;gap:3px}.urow.two{grid-template-columns:56px minmax(0,1fr) minmax(0,1fr) 23px}.urow.three{grid-template-columns:56px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 23px}.label{font-size:9.8px}input{height:21px;font-size:12.5px}.sbtn{width:22px;height:21px;font-size:13px}.memo-list{min-height:46vh}}
 </style>
 </head>
 <body>
 <main class="app">
-  <div class="header"><h1><span>HOPPY</span> Unit Converter</h1><div class="ver">v4.0</div></div>
+  <div class="header"><h1><span>HOPPY</span> Unit Converter</h1><div class="ver">v4.1</div></div>
 
   <nav class="tabs">
     <button class="tab active" data-tab="length">Length</button>
@@ -68,7 +68,7 @@ input{width:100%;height:26px;border:0;background:transparent;outline:none;text-a
       </div>
       
     </div>
-    <div class="memo"><div class="memo-head"><div class="memo-title">Length Saved</div><button class="clear" data-cat="length">Clear All</button></div><div id="memo_length" class="memo-list"></div></div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="length">Clear All</button></div><div id="memo_length" class="memo-list"></div></div>
   </section>
 
   <section id="area" class="panel" data-cat="area">
@@ -79,7 +79,7 @@ input{width:100%;height:26px;border:0;background:transparent;outline:none;text-a
         <div class="urow"><span class="label">pyeong</span><input enterkeyhint="done" id="area_pyeong" data-cat="area" data-unit="pyeong" inputmode="decimal" placeholder="pyeong"><button class="sbtn" data-cat="area" data-unit="pyeong">＋</button></div>
       </div>
     </div>
-    <div class="memo"><div class="memo-head"><div class="memo-title">Area Saved</div><button class="clear" data-cat="area">Clear All</button></div><div id="memo_area" class="memo-list"></div></div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="area">Clear All</button></div><div id="memo_area" class="memo-list"></div></div>
   </section>
 
   <section id="volume" class="panel" data-cat="volume">
@@ -93,7 +93,7 @@ input{width:100%;height:26px;border:0;background:transparent;outline:none;text-a
         <div class="urow"><span class="label">fl oz</span><input enterkeyhint="done" id="volume_floz" data-cat="volume" data-unit="floz" inputmode="decimal" placeholder="fl oz"><button class="sbtn" data-cat="volume" data-unit="floz">＋</button></div>
       </div>
     </div>
-    <div class="memo"><div class="memo-head"><div class="memo-title">Volume Saved</div><button class="clear" data-cat="volume">Clear All</button></div><div id="memo_volume" class="memo-list"></div></div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="volume">Clear All</button></div><div id="memo_volume" class="memo-list"></div></div>
   </section>
 
   <section id="temp" class="panel" data-cat="temp">
@@ -103,7 +103,7 @@ input{width:100%;height:26px;border:0;background:transparent;outline:none;text-a
         <div class="urow"><span class="label">°C</span><input enterkeyhint="done" id="temp_c" data-cat="temp" data-unit="c" inputmode="decimal" placeholder="°C"><button class="sbtn" data-cat="temp" data-unit="c">＋</button></div>
       </div>
     </div>
-    <div class="memo"><div class="memo-head"><div class="memo-title">Temp Saved</div><button class="clear" data-cat="temp">Clear All</button></div><div id="memo_temp" class="memo-list"></div></div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="temp">Clear All</button></div><div id="memo_temp" class="memo-list"></div></div>
   </section>
 
   <section id="weight" class="panel" data-cat="weight">
@@ -115,7 +115,7 @@ input{width:100%;height:26px;border:0;background:transparent;outline:none;text-a
         <div class="urow"><span class="label">g</span><input enterkeyhint="done" id="weight_g" data-cat="weight" data-unit="g" inputmode="decimal" placeholder="g"><button class="sbtn" data-cat="weight" data-unit="g">＋</button></div>
       </div>
     </div>
-    <div class="memo"><div class="memo-head"><div class="memo-title">Weight Saved</div><button class="clear" data-cat="weight">Clear All</button></div><div id="memo_weight" class="memo-list"></div></div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Saved</div><button class="clear" data-cat="weight">Clear All</button></div><div id="memo_weight" class="memo-list"></div></div>
   </section>
 </main>
 
