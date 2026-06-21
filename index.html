@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>HOPPY Unit Converter v4.0</title>
+<link rel="manifest" href="./manifest.json">
+<style>
+:root{
+  --bg:#eef2f7;
+  --card:#ffffff;
+  --card2:#f8fafc;
+  --text:#0f172a;
+  --muted:#64748b;
+  --line:#d9e1ec;
+  --shadow:0 10px 28px rgba(15,23,42,.10);
+  --blue:#2563eb;
+  --green:#16a34a;
+  --cyan:#0891b2;
+  --orange:#f97316;
+  --purple:#7c3aed;
+  --red:#dc2626;
+  --dark:#111827;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:linear-gradient(180deg,#eaf1fb 0%,#f6f8fb 46%,#eef2f7 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",Arial,sans-serif}
+body{padding:env(safe-area-inset-top) 8px env(safe-area-inset-bottom)}
+.app{max-width:860px;margin:0 auto;padding:8px 0 14px}
+.header{display:flex;justify-content:space-between;align-items:center;margin:0 0 8px;padding:12px 14px;border:1px solid rgba(217,225,236,.9);border-radius:20px;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+h1{font-size:20px;line-height:1.05;margin:0;letter-spacing:-.045em;font-weight:950}.header h1 span{color:var(--blue)}.ver{font-size:11px;color:#fff;background:var(--dark);font-weight:900;border-radius:999px;padding:5px 8px;letter-spacing:.02em}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:17px;padding:5px;box-shadow:var(--shadow);position:sticky;top:4px;z-index:30;backdrop-filter:blur(10px)}
+.tab{height:36px;border:0;border-radius:12px;background:transparent;color:var(--muted);font-size:12.5px;font-weight:950;cursor:pointer;letter-spacing:-.02em}.tab.active{color:#fff;box-shadow:0 6px 16px rgba(15,23,42,.16)}
+.tab[data-tab="length"].active{background:var(--blue)}.tab[data-tab="area"].active{background:var(--green)}.tab[data-tab="volume"].active{background:var(--cyan)}.tab[data-tab="temp"].active{background:var(--orange)}.tab[data-tab="weight"].active{background:var(--purple)}
+.panel{display:none;margin-top:8px}.panel.active{display:block}.panel-card,.memo{background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}.panel-card{padding:8px}.panel-title{display:flex;align-items:center;justify-content:space-between;margin:0 2px 8px}h2{font-size:16px;margin:0;font-weight:950;letter-spacing:-.03em}.tip{font-size:10px;color:var(--muted)}
+#length .panel-card,#length .memo{border-top:5px solid var(--blue)}#area .panel-card,#area .memo{border-top:5px solid var(--green)}#volume .panel-card,#volume .memo{border-top:5px solid var(--cyan)}#temp .panel-card,#temp .memo{border-top:5px solid var(--orange)}#weight .panel-card,#weight .memo{border-top:5px solid var(--purple)}
+.rows{display:grid;gap:6px}.urow{display:grid;grid-template-columns:84px minmax(0,1fr) 30px;gap:6px;align-items:center;min-height:38px;border:1px solid #e3e9f2;background:linear-gradient(180deg,#fff,#fbfdff);border-radius:14px;padding:5px 7px}.urow.two{grid-template-columns:84px minmax(0,1fr) minmax(0,1fr) 30px}.urow.three{grid-template-columns:84px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 30px}.label{font-size:12px;color:var(--muted);font-weight:950;white-space:nowrap;letter-spacing:-.02em}
+input{width:100%;height:26px;border:0;background:transparent;outline:none;text-align:right;font-size:16px;font-weight:850;color:var(--text);padding:0 1px}input::placeholder{color:#b2bdca;font-weight:700}.sbtn{border:0;background:#eef4ff;color:var(--blue);border-radius:999px;width:28px;height:27px;font-size:16px;line-height:1;font-weight:950;cursor:pointer;padding:0}.sbtn:active,.clear:active,.xbtn:active{transform:scale(.96)}
+.memo{margin-top:8px}.memo-head{display:flex;align-items:center;justify-content:space-between;background:#f4f7fb;border-bottom:1px solid var(--line);padding:8px 10px}.memo-title{font-size:13px;font-weight:950;letter-spacing:-.02em}.clear{border:1px solid #fecaca;background:#fff;color:var(--red);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:900;cursor:pointer}.memo-list{min-height:210px;max-height:46vh;overflow:auto;background:#fff}.empty{padding:12px;color:var(--muted);font-size:12.5px}.memo-item{display:grid;grid-template-columns:1fr 28px;gap:6px;align-items:center;border-top:1px solid #edf1f6;padding:8px 9px;font-size:14px;line-height:1.23}.memo-item:first-child{border-top:0}.xbtn{width:26px;height:26px;border:1px solid #fecaca;background:#fff;color:var(--red);font-weight:950;border-radius:999px;cursor:pointer}.note{display:none}
+@media (min-width:680px){body{padding-left:14px;padding-right:14px}.app{padding-top:14px}.header{padding:14px 16px}h1{font-size:24px}.tab{height:40px;font-size:13.5px}.panel-card{padding:10px}.rows{grid-template-columns:1fr 1fr;gap:8px}.urow{grid-template-columns:98px minmax(0,1fr) 32px;min-height:42px}.urow.two{grid-template-columns:98px minmax(0,1fr) minmax(0,1fr) 32px}.urow.three{grid-template-columns:98px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 32px}.memo-list{min-height:260px;max-height:50vh}}
+@media (max-width:370px){body{padding-left:5px;padding-right:5px}.header{padding:10px 11px;border-radius:17px}h1{font-size:18px}.ver{font-size:10px;padding:4px 7px}.tabs{gap:3px;padding:4px;border-radius:15px}.tab{height:33px;font-size:11.5px;border-radius:10px}.panel{margin-top:6px}.panel-card{padding:6px;border-radius:17px}.memo{border-radius:17px}.urow{grid-template-columns:76px minmax(0,1fr) 27px;min-height:34px;border-radius:12px;padding:4px 6px;gap:4px}.urow.two{grid-template-columns:76px minmax(0,1fr) minmax(0,1fr) 27px}.urow.three{grid-template-columns:76px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 27px}.label{font-size:11px}input{height:24px;font-size:14px}.sbtn{width:26px;height:25px;font-size:15px}.memo-list{min-height:190px;max-height:42vh}}
+</style>
+</head>
+<body>
+<main class="app">
+  <div class="header"><h1><span>HOPPY</span> Unit Converter</h1><div class="ver">v4.0</div></div>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="length">Length</button>
+    <button class="tab" data-tab="area">Area</button>
+    <button class="tab" data-tab="volume">Volume</button>
+    <button class="tab" data-tab="temp">Temp</button>
+    <button class="tab" data-tab="weight">Weight</button>
+  </nav>
+
+  <section id="length" class="panel active" data-cat="length">
+    <div class="panel-card">
+      <div class="panel-title"><h2>Length</h2><div class="tip"></div></div>
+      <div class="rows">
+        <div class="urow"><span class="label">mm</span><input enterkeyhint="done" id="length_mm" data-cat="length" data-unit="mm" inputmode="decimal" placeholder="mm"><button class="sbtn" data-cat="length" data-unit="mm">＋</button></div>
+        <div class="urow"><span class="label">cm</span><input enterkeyhint="done" id="length_cm" data-cat="length" data-unit="cm" inputmode="decimal" placeholder="cm"><button class="sbtn" data-cat="length" data-unit="cm">＋</button></div>
+        <div class="urow"><span class="label">m</span><input enterkeyhint="done" id="length_m" data-cat="length" data-unit="m" inputmode="decimal" placeholder="m"><button class="sbtn" data-cat="length" data-unit="m">＋</button></div>
+        <div class="urow"><span class="label">inch</span><input enterkeyhint="done" id="length_inch" data-cat="length" data-unit="inch" inputmode="decimal" placeholder="89.567"><button class="sbtn" data-cat="length" data-unit="inch">＋</button></div>
+        <div class="urow two"><span class="label">inch+frac</span><input enterkeyhint="done" id="length_fraction_whole" data-cat="length" data-unit="fraction" inputmode="decimal" placeholder="75"><input enterkeyhint="done" id="length_fraction_part" data-cat="length" data-unit="fraction" placeholder="fraction"><button class="sbtn" data-cat="length" data-unit="fraction">＋</button></div>
+        <div class="urow"><span class="label">ft</span><input enterkeyhint="done" id="length_ft" data-cat="length" data-unit="ft" inputmode="decimal" placeholder="9.6"><button class="sbtn" data-cat="length" data-unit="ft">＋</button></div>
+        <div class="urow two"><span class="label">ft+frac</span><input enterkeyhint="done" id="length_ftonlyfrac_ft" data-cat="length" data-unit="ftonlyfrac" inputmode="decimal" placeholder="ft"><input enterkeyhint="done" id="length_ftonlyfrac_frac" data-cat="length" data-unit="ftonlyfrac" placeholder="fraction"><button class="sbtn" data-cat="length" data-unit="ftonlyfrac">＋</button></div>
+        <div class="urow three"><span class="label">ft+inch</span><input enterkeyhint="done" id="length_ftfrac_ft" data-cat="length" data-unit="ftfrac" inputmode="decimal" placeholder="ft"><input enterkeyhint="done" id="length_ftfrac_in" data-cat="length" data-unit="ftfrac" inputmode="decimal" placeholder="inch"><input enterkeyhint="done" id="length_ftfrac_frac" data-cat="length" data-unit="ftfrac" placeholder="fraction"><button class="sbtn" data-cat="length" data-unit="ftfrac">＋</button></div>
+      </div>
+      
+    </div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Length Saved</div><button class="clear" data-cat="length">Clear All</button></div><div id="memo_length" class="memo-list"></div></div>
+  </section>
+
+  <section id="area" class="panel" data-cat="area">
+    <div class="panel-card"><div class="panel-title"><h2>Area</h2><div class="tip"></div></div>
+      <div class="rows">
+        <div class="urow"><span class="label">sq ft</span><input enterkeyhint="done" id="area_sqft" data-cat="area" data-unit="sqft" inputmode="decimal" placeholder="sq ft"><button class="sbtn" data-cat="area" data-unit="sqft">＋</button></div>
+        <div class="urow"><span class="label">㎡</span><input enterkeyhint="done" id="area_sqm" data-cat="area" data-unit="sqm" inputmode="decimal" placeholder="㎡"><button class="sbtn" data-cat="area" data-unit="sqm">＋</button></div>
+        <div class="urow"><span class="label">pyeong</span><input enterkeyhint="done" id="area_pyeong" data-cat="area" data-unit="pyeong" inputmode="decimal" placeholder="pyeong"><button class="sbtn" data-cat="area" data-unit="pyeong">＋</button></div>
+      </div>
+    </div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Area Saved</div><button class="clear" data-cat="area">Clear All</button></div><div id="memo_area" class="memo-list"></div></div>
+  </section>
+
+  <section id="volume" class="panel" data-cat="volume">
+    <div class="panel-card"><div class="panel-title"><h2>Volume / Liquid</h2><div class="tip">U.S. units</div></div>
+      <div class="rows">
+        <div class="urow"><span class="label">cu ft</span><input enterkeyhint="done" id="volume_cuft" data-cat="volume" data-unit="cuft" inputmode="decimal" placeholder="cu ft"><button class="sbtn" data-cat="volume" data-unit="cuft">＋</button></div>
+        <div class="urow"><span class="label">quart</span><input enterkeyhint="done" id="volume_qt" data-cat="volume" data-unit="qt" inputmode="decimal" placeholder="quart"><button class="sbtn" data-cat="volume" data-unit="qt">＋</button></div>
+        <div class="urow"><span class="label">gallon</span><input enterkeyhint="done" id="volume_gal" data-cat="volume" data-unit="gal" inputmode="decimal" placeholder="gallon"><button class="sbtn" data-cat="volume" data-unit="gal">＋</button></div>
+        <div class="urow"><span class="label">liter</span><input enterkeyhint="done" id="volume_l" data-cat="volume" data-unit="l" inputmode="decimal" placeholder="liter"><button class="sbtn" data-cat="volume" data-unit="l">＋</button></div>
+        <div class="urow"><span class="label">mL</span><input enterkeyhint="done" id="volume_ml" data-cat="volume" data-unit="ml" inputmode="decimal" placeholder="mL"><button class="sbtn" data-cat="volume" data-unit="ml">＋</button></div>
+        <div class="urow"><span class="label">fl oz</span><input enterkeyhint="done" id="volume_floz" data-cat="volume" data-unit="floz" inputmode="decimal" placeholder="fl oz"><button class="sbtn" data-cat="volume" data-unit="floz">＋</button></div>
+      </div>
+    </div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Volume Saved</div><button class="clear" data-cat="volume">Clear All</button></div><div id="memo_volume" class="memo-list"></div></div>
+  </section>
+
+  <section id="temp" class="panel" data-cat="temp">
+    <div class="panel-card"><div class="panel-title"><h2>Temp</h2><div class="tip"></div></div>
+      <div class="rows">
+        <div class="urow"><span class="label">°F</span><input enterkeyhint="done" id="temp_f" data-cat="temp" data-unit="f" inputmode="decimal" placeholder="°F"><button class="sbtn" data-cat="temp" data-unit="f">＋</button></div>
+        <div class="urow"><span class="label">°C</span><input enterkeyhint="done" id="temp_c" data-cat="temp" data-unit="c" inputmode="decimal" placeholder="°C"><button class="sbtn" data-cat="temp" data-unit="c">＋</button></div>
+      </div>
+    </div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Temp Saved</div><button class="clear" data-cat="temp">Clear All</button></div><div id="memo_temp" class="memo-list"></div></div>
+  </section>
+
+  <section id="weight" class="panel" data-cat="weight">
+    <div class="panel-card"><div class="panel-title"><h2>Weight</h2><div class="tip"></div></div>
+      <div class="rows">
+        <div class="urow"><span class="label">lb</span><input enterkeyhint="done" id="weight_lb" data-cat="weight" data-unit="lb" inputmode="decimal" placeholder="lb"><button class="sbtn" data-cat="weight" data-unit="lb">＋</button></div>
+        <div class="urow"><span class="label">oz</span><input enterkeyhint="done" id="weight_oz" data-cat="weight" data-unit="oz" inputmode="decimal" placeholder="oz"><button class="sbtn" data-cat="weight" data-unit="oz">＋</button></div>
+        <div class="urow"><span class="label">kg</span><input enterkeyhint="done" id="weight_kg" data-cat="weight" data-unit="kg" inputmode="decimal" placeholder="kg"><button class="sbtn" data-cat="weight" data-unit="kg">＋</button></div>
+        <div class="urow"><span class="label">g</span><input enterkeyhint="done" id="weight_g" data-cat="weight" data-unit="g" inputmode="decimal" placeholder="g"><button class="sbtn" data-cat="weight" data-unit="g">＋</button></div>
+      </div>
+    </div>
+    <div class="memo"><div class="memo-head"><div class="memo-title">Weight Saved</div><button class="clear" data-cat="weight">Clear All</button></div><div id="memo_weight" class="memo-list"></div></div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const cats = ["length","area","volume","temp","weight"];
+let updating = false;
+let saveDraft = {length:[], area:[], volume:[], temp:[], weight:[]};
+
+const label = {mm:"mm",cm:"cm",m:"m",inch:"inch",fraction:"inch+frac",ft:"ft",ftonlyfrac:"ft+frac",ftfrac:"ft+inch",sqft:"sq ft",sqm:"㎡",pyeong:"pyeong",cuft:"cu ft",qt:"quart",gal:"gallon",l:"liter",ml:"mL",floz:"fl oz",f:"°F",c:"°C",lb:"lb",oz:"oz",kg:"kg",g:"g"};
+
+function num(s){s=String(s||"").trim().replace(/,/g,"");return s?Number(s):NaN}
+function fmt(v,d=3){if(!Number.isFinite(v))return"";const fixed=Number(v.toFixed(d));return fixed.toLocaleString(undefined,{maximumFractionDigits:d})}
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){let t=b;b=a%b;a=t}return a||1}
+function parseFrac(s){s=String(s||"").trim().replace(/,/g,"").replace(/"/g,"");if(!s)return 0;if(!s.includes("/"))return num(s);const[a,b]=s.split("/").map(Number);if(!Number.isFinite(a)||!Number.isFinite(b)||b===0)return NaN;return a/b}
+function inchFracParts(inches){if(!Number.isFinite(inches))return{whole:"",frac:""};const sign=inches<0?-1:1,abs=Math.abs(inches);let whole=Math.floor(abs),n=Math.round((abs-whole)*16);if(n===16){whole+=1;n=0}whole*=sign;if(n===0)return{whole:String(whole),frac:""};const g=gcd(n,16);return{whole:String(whole),frac:(n/g)+"/"+(16/g)}}
+function ftInParts(totalInches){if(!Number.isFinite(totalInches))return{ft:"",inch:""};const sign=totalInches<0?-1:1,abs=Math.abs(totalInches),ft=Math.floor(abs/12)*sign,inch=(abs-Math.floor(abs/12)*12)*sign;return{ft:String(ft),inch:fmt(inch,3)}}
+function ftFracParts(totalInches){const p=ftInParts(totalInches),frac=inchFracParts(num(p.inch));return{ft:p.ft,inch:frac.whole,frac:frac.frac}}
+function ftOnlyFracParts(totalFeet){if(!Number.isFinite(totalFeet))return{ft:"",frac:""};const sign=totalFeet<0?-1:1,abs=Math.abs(totalFeet);let whole=Math.floor(abs),n=Math.round((abs-whole)*16);if(n===16){whole+=1;n=0}whole*=sign;if(n===0)return{ft:String(whole),frac:""};const g=gcd(n,16);return{ft:String(whole),frac:(n/g)+"/"+(16/g)}}
+function setVal(id,v,d=3){const el=$(id);if(document.activeElement!==el)el.value=Number.isFinite(v)?fmt(v,d):""}
+function setText(id,v){const el=$(id);if(document.activeElement!==el)el.value=v||""}
+function clearCat(cat){document.querySelectorAll(`input[data-cat="${cat}"]`).forEach(i=>{if(document.activeElement!==i)i.value=""})}
+
+function saveDisplay(cat,unit){
+  if(cat==="length"){
+    if(unit==="fraction"){const w=$("length_fraction_whole").value.trim(),f=$("length_fraction_part").value.trim();return (w+(f?" "+f:"")).trim()+" in"}
+    if(unit==="ftonlyfrac"){const ft=$("length_ftonlyfrac_ft").value.trim()||"0",frac=$("length_ftonlyfrac_frac").value.trim();return ft+(frac?" "+frac:"")+" ft"}
+    if(unit==="ftfrac"){const ft=$("length_ftfrac_ft").value.trim()||"0",inch=$("length_ftfrac_in").value.trim()||"0",frac=$("length_ftfrac_frac").value.trim();return ft+" ft "+inch+(frac?" "+frac:"")+" in"}
+  }
+  const el=$(cat+"_"+unit),v=el?el.value.trim():"";return v?v+" "+label[unit]:""
+}
+
+function updateLength(unit){
+  if(updating)return;updating=true;let meters=NaN;
+  if(unit==="mm")meters=num($("length_mm").value)/1000;
+  if(unit==="cm")meters=num($("length_cm").value)/100;
+  if(unit==="m")meters=num($("length_m").value);
+  if(unit==="inch")meters=num($("length_inch").value)*0.0254;
+  if(unit==="fraction"){const whole=num($("length_fraction_whole").value),frac=parseFrac($("length_fraction_part").value);if(Number.isFinite(whole)||Number.isFinite(frac))meters=((Number.isFinite(whole)?whole:0)+(Number.isFinite(frac)?frac:0))*0.0254}
+  if(unit==="ft")meters=num($("length_ft").value)*0.3048;
+  if(unit==="ftonlyfrac"){const ft=num($("length_ftonlyfrac_ft").value),frac=parseFrac($("length_ftonlyfrac_frac").value);if(Number.isFinite(ft)||Number.isFinite(frac))meters=((Number.isFinite(ft)?ft:0)+(Number.isFinite(frac)?frac:0))*0.3048}
+  if(unit==="ftfrac"){const ft=num($("length_ftfrac_ft").value),inch=num($("length_ftfrac_in").value),frac=parseFrac($("length_ftfrac_frac").value);if(Number.isFinite(ft)||Number.isFinite(inch)||Number.isFinite(frac))meters=((Number.isFinite(ft)?ft:0)*12+(Number.isFinite(inch)?inch:0)+(Number.isFinite(frac)?frac:0))*0.0254}
+  if(!Number.isFinite(meters)){clearCat("length");updating=false;return}
+  const inches=meters/0.0254;
+  setVal("length_mm",meters*1000,2);setVal("length_cm",meters*100,2);setVal("length_m",meters,4);setVal("length_inch",inches,4);setVal("length_ft",meters/0.3048,4);
+  const fp=inchFracParts(inches);if(unit!=="fraction"){setText("length_fraction_whole",fp.whole);setText("length_fraction_part",fp.frac)}
+  const fonly=ftOnlyFracParts(meters/0.3048);if(unit!=="ftonlyfrac"){setText("length_ftonlyfrac_ft",fonly.ft);setText("length_ftonlyfrac_frac",fonly.frac)}
+  const ff=ftFracParts(inches);if(unit!=="ftfrac"){setText("length_ftfrac_ft",ff.ft);setText("length_ftfrac_in",ff.inch);setText("length_ftfrac_frac",ff.frac)}
+  updating=false;
+}
+function updateArea(unit){if(updating)return;updating=true;let sqm=NaN;const v=num($("area_"+unit).value);if(unit==="sqft")sqm=v*0.09290304;if(unit==="sqm")sqm=v;if(unit==="pyeong")sqm=v*3.305785;if(!Number.isFinite(sqm)){clearCat("area");updating=false;return}setVal("area_sqft",sqm/0.09290304,3);setVal("area_sqm",sqm,3);setVal("area_pyeong",sqm/3.305785,3);updating=false}
+function updateVolume(unit){if(updating)return;updating=true;let l=NaN;const v=num($("volume_"+unit).value);if(unit==="cuft")l=v*28.316846592;if(unit==="qt")l=v*0.946352946;if(unit==="gal")l=v*3.785411784;if(unit==="l")l=v;if(unit==="ml")l=v/1000;if(unit==="floz")l=v*0.0295735295625;if(!Number.isFinite(l)){clearCat("volume");updating=false;return}setVal("volume_cuft",l/28.316846592,4);setVal("volume_qt",l/0.946352946,3);setVal("volume_gal",l/3.785411784,3);setVal("volume_l",l,3);setVal("volume_ml",l*1000,1);setVal("volume_floz",l/0.0295735295625,3);updating=false}
+function updateTemp(unit){if(updating)return;updating=true;const v=num($("temp_"+unit).value),c=unit==="c"?v:(v-32)*5/9;if(!Number.isFinite(c)){clearCat("temp");updating=false;return}setVal("temp_f",c*9/5+32,2);setVal("temp_c",c,2);updating=false}
+function updateWeight(unit){if(updating)return;updating=true;let g=NaN;const v=num($("weight_"+unit).value);if(unit==="lb")g=v*453.59237;if(unit==="oz")g=v*28.349523125;if(unit==="kg")g=v*1000;if(unit==="g")g=v;if(!Number.isFinite(g)){clearCat("weight");updating=false;return}setVal("weight_lb",g/453.59237,4);setVal("weight_oz",g/28.349523125,3);setVal("weight_kg",g/1000,4);setVal("weight_g",g,2);updating=false}
+
+function key(cat){return"hoppy_unit_converter_v27_memo_"+cat}
+function getMemos(cat){try{return JSON.parse(localStorage.getItem(key(cat))||"[]")}catch(e){return[]}}
+function setMemos(cat,a){localStorage.setItem(key(cat),JSON.stringify(a.slice(0,100)));renderMemo(cat)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+function renderMemo(cat){const box=$("memo_"+cat),arr=getMemos(cat);if(!arr.length){box.innerHTML='<div class="empty">No saved values.</div>';return}box.innerHTML=arr.map((x,i)=>{const shown=String(x).replace("__draft__","");return `<div class="memo-item"><div>${esc(shown)}</div><button class="xbtn" data-cat="${cat}" data-i="${i}">×</button></div>`}).join("");box.querySelectorAll(".xbtn").forEach(b=>b.onclick=()=>{const a=getMemos(b.dataset.cat);a.splice(Number(b.dataset.i),1);setMemos(b.dataset.cat,a)})}
+
+document.querySelectorAll("input[data-cat]").forEach(el=>{el.addEventListener("focus",()=>el.select());el.addEventListener("input",()=>{const cat=el.dataset.cat,unit=el.dataset.unit;saveDraft[cat]=[];if(cat==="length")updateLength(unit);if(cat==="area")updateArea(unit);if(cat==="volume")updateVolume(unit);if(cat==="temp")updateTemp(unit);if(cat==="weight")updateWeight(unit)})});
+document.querySelectorAll(".sbtn").forEach(btn=>btn.onclick=()=>{
+  const cat=btn.dataset.cat, unit=btn.dataset.unit, item=saveDisplay(cat,unit);
+  if(!item.trim())return;
+  if(!saveDraft[cat]) saveDraft[cat]=[];
+  if(!saveDraft[cat].includes(item)) saveDraft[cat].push(item);
+  const line=saveDraft[cat].join(" = ");
+  const a=getMemos(cat);
+  if(a.length && a[0].startsWith("__draft__")) a[0]="__draft__"+line;
+  else a.unshift("__draft__"+line);
+  setMemos(cat,a);
+});
+document.querySelectorAll(".clear").forEach(btn=>btn.onclick=()=>{localStorage.removeItem(key(btn.dataset.cat));renderMemo(btn.dataset.cat)});
+document.querySelectorAll(".tab").forEach(btn=>btn.onclick=()=>{document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));btn.classList.add("active");$(btn.dataset.tab).classList.add("active")});
+cats.forEach(renderMemo);
+
+function hideKeyboardOnly(){
+  const active = document.activeElement;
+  if(active && active.tagName === "INPUT") active.blur();
+}
+document.querySelectorAll("input").forEach(el=>{
+  el.addEventListener("keydown", e=>{
+    if(e.key === "Enter"){
+      e.preventDefault();
+      hideKeyboardOnly();
+    }
+  });
+});
+document.querySelectorAll(".sbtn").forEach(btn=>{
+  btn.addEventListener("touchend", ()=>hideKeyboardOnly(), {passive:true});
+  btn.addEventListener("click", ()=>hideKeyboardOnly());
+});
+
+if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
+</script>
+</body>
+</html>
